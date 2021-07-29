@@ -26,7 +26,7 @@ export default function(SpecificComponent, option, adminRoute = null){
                     }
                 }
             });   
-        }, []);
+        }, [dispatch, props]);
 
         return (
             <SpecificComponent {...props}/>

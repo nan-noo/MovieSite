@@ -7,21 +7,9 @@ function LandingPage(props) {
         .then(response => console.log(response))
     }, []);
 
-    // logout
-    const onClickHandler = () => {
-        axios.get('/api/users/logout')
-        .then(response => {
-            if(response.data.logoutSuccess){
-                props.history.push("/login");
-            }
-            else{
-                alert('Failed to log out');
-            }
-        })
-    };
-
     return (
-        <div style={{
+        <div className="app"
+        style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -29,9 +17,7 @@ function LandingPage(props) {
             width: '100%',
             height: '100vh'
         }}>
-            <h2>Landing Page</h2>
-            <br/>
-            <button onClick={onClickHandler}>Log out</button>
+            <h2>Welcome!</h2>
         </div>
     );
 }
