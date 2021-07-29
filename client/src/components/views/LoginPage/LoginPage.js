@@ -4,25 +4,24 @@ import {loginUser} from '../../../_actions/user_actions';
 
 function LoginPage(props) {
     const dispatch = useDispatch();
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
+    const [Inputs, setInputs] = useState({
+        email: "",
+        password: ""
+    });
+    const {email, password} = Inputs;
 
-    const onEmailHandler = (event) => {
-        setEmail(event.currentTarget.value)
-    };
-
-    const onPasswordHandler = (event) => {
-        setPassword(event.currentTarget.value)
+    const onInputsHandler = (event) => {
+        const {value, name} = event.target;
+        setInputs({
+            ...Inputs, //기존의 Input객체 복사
+            [name]: value // 바뀐 값을 해당 name(key)에 설정
+        });
     };
 
     const onSubmitHandler = (event) => {
         event.preventDefault(); // page refresh 방지
 
-        let body = {
-            email: Email,
-            password: Password
-        }
-        dispatch(loginUser(body))
+        dispatch(loginUser(Inputs))
             .then(response => {
                 if(response.payload.loginSuccess){
                     props.history.push('/'); // landingPage로 이동
@@ -48,9 +47,9 @@ function LoginPage(props) {
                 onSubmit={onSubmitHandler}
             >
                 <label>Email</label>
-                <input type="email" value={Email} onChange={onEmailHandler} />
+                <input type="email" name="email" value={email} onChange={onInputsHandler} />
                 <label>Password</label>
-                <input type="password" value={Password} onChange={onPasswordHandler} />
+                <input type="password" name="password" value={password} onChange={onInputsHandler} />
                 <br/>
                 <button type="submit">Login</button>
             </form>

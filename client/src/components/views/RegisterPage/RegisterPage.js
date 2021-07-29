@@ -4,38 +4,34 @@ import {registerUser} from '../../../_actions/user_actions';
 
 function RegisterPage(props) {
     const dispatch = useDispatch();
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
-    const [Name, setName] = useState("");
-    const [ConfirmPassword, setConfirmPassword] = useState("");
+    const [Inputs, setInputs] = useState({
+        email: "",
+        name: "",
+        password: "",
+        comfirmPassword: ""
+    });
 
-    const onEmailHandler = (event) => {
-        setEmail(event.currentTarget.value);
-    };
+    const {email, name, password, confirmPassword} = Inputs;
 
-    const onNameHandler = (event) => {
-        setName(event.currentTarget.value);
-    };
-
-    const onPasswordHandler = (event) => {
-        setPassword(event.currentTarget.value);
-    };
-
-    const onConfirmPasswordHandler = (event) => {
-        setConfirmPassword(event.currentTarget.value);
+    const onInputsHandler = (event) => {
+        const {value, name} = event.target;
+        setInputs({
+            ...Inputs, //기존의 Input객체 복사
+            [name]: value // 바뀐 value를 해당 name(key)에 저장
+        });
     };
 
     const onSubmitHandler = (event) => {
         event.preventDefault(); // page refresh 방지
 
-        if(Password !== ConfirmPassword){
-            return alert('비밀번호가 일치하지 않습니다.');
+        if(password !== confirmPassword){
+            return alert('비밀번호 확인을 다시 해주세요.');
         }
 
         let body = {
-            email: Email,
-            name: Name,
-            password: Password
+            email: email,
+            name: name,
+            password: password
         }
         dispatch(registerUser(body))
             .then(response => {
@@ -63,13 +59,13 @@ function RegisterPage(props) {
                 onSubmit={onSubmitHandler}
             >
                 <label>Email</label>
-                <input type="email" value={Email} onChange={onEmailHandler} />
+                <input type="email" name="email" value={email} onChange={onInputsHandler} />
                 <label>Name</label>
-                <input type="text" value={Name} onChange={onNameHandler} />
+                <input type="text" name="name" value={name} onChange={onInputsHandler} />
                 <label>Password</label>
-                <input type="password" value={Password} onChange={onPasswordHandler} />
+                <input type="password" name="password" value={password} onChange={onInputsHandler} />
                 <label>Confirm Password</label>
-                <input type="password" value={ConfirmPassword} onChange={onConfirmPasswordHandler} />
+                <input type="password" name="confirmPassword" value={confirmPassword} onChange={onInputsHandler} />
                 <br/>
                 <button type="submit">Register</button>
             </form>
