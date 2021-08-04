@@ -1,30 +1,43 @@
-import {React, useEffect, useState} from 'react'
+import React from 'react';
+import {useEffect, useState} from 'react'
 import { API_URL, IMAGE_BASE_URL } from '../../Config';
-import API_KEY from '../../../key';
+import { API_KEY } from '../../../key';
 import MainImage from './Sections/MainImage';
+import GridCards from '../commons/GridCards';
+
+import {Row, Button} from 'antd';
 
 function LandingPage(props) {
     const [Inputs, setInputs] = useState({
         movies: [],
-        mainMovieImage: null 
+        mainMovieImage: null,
+        currentPage: 0 
     });
 
-    const {movies, mainMovieImage} = Inputs;
+    const {movies, mainMovieImage, currentPage} = Inputs;
+    const endpoint = `${API_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage + 1}`;
 
     useEffect(() => {
-        const endpoint = `${API_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+        fetchMovies(endpoint);
+    }, []);
 
+    const fetchMovies = (endpoint) => {
         fetch(endpoint)
         .then(response => response.json())
         .then(response => {
-            //console.log(response);
+            console.log(response.results);
             setInputs({
                 ...Inputs,
-                movies: [response.results],
-                mainMovieImage: response.results[0]         
+                movies: [...movies, ...response.results],
+                mainMovieImage: response.results[0],
+                currentPage: response.page                   
             });
         })
-    }, []);
+    };
+
+    const loadMoreItems = () => {
+        fetchMovies(endpoint);
+    };
 
     return (
         <div style={{ width: '100%', margin: '0'}}>
@@ -40,11 +53,23 @@ function LandingPage(props) {
                 <h2>Movies by latest</h2>
                 <hr/>
                 {/* Movie Grid Cards */}
+                <Row gutter={[16, 16]}>
+                    {movies && movies.map((movie, index) => (
+                        <React.Fragment key={index}>
+                            <GridCards 
+                                image={movie.poster_path ? `${IMAGE_BASE_URL}/w500${movie.poster_path}` : null}
+                                movieId={movie.id}
+                                movieTitle={movie.original_title}
+                            />
+                        </React.Fragment>
+                    ))}
+                </Row>
+                
             </div>
 
 
             <div style={{display: 'flex', justifyContent: 'center'}}>
-                <button>Load More</button>
+                <Button type="primary" onClick={loadMoreItems}>Load More</Button>
             </div>
         </div>
     );
