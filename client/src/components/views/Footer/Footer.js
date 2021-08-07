@@ -9,7 +9,7 @@ function Footer() {
             flexDirection: 'column', alignItems: 'center',
             justifyContent: 'center', fontSize: '1rem'
         }}>
-            <p style={{textAlign: 'center', fontSize: '1rem'}}> © nannoo <br/>
+            <p style={{textAlign: 'center', fontSize: '1rem', color: 'grey'}}> nannoo &nbsp;
                 <SmileOutlined/>
             </p>
         </div>
