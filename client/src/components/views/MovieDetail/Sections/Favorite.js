@@ -10,11 +10,11 @@ function Favorite({movieInfo, movieId, userFrom}) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        let variables = {
+        let data = {
             userFrom: userFrom,
             movieId: movieId
         }
-        dispatch(favoriteNumber(variables))
+        dispatch(favoriteNumber(data))
         .then(response => {
             if(response.payload.favoriteSuccess){
 
@@ -22,10 +22,10 @@ function Favorite({movieInfo, movieId, userFrom}) {
             else{
                 alert('숫자 정보를 가져오는 데에 실패했습니다.');
             }
-        })
+        });
         
         
-    }, [])
+    }, [dispatch, movieId, userFrom])
 
     return (
         <Button type="dashed">Add To Favorite

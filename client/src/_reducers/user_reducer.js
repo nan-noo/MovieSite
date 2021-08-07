@@ -1,6 +1,6 @@
 import {LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER} from '../_actions/types';
 
-export default function(previousState = {}, action){
+export default function userReducer(previousState = {}, action){
     switch(action.type){
         case LOGIN_USER:
             return {...previousState, login: action.payload};

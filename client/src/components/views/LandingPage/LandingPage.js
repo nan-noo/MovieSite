@@ -17,15 +17,11 @@ function LandingPage(props) {
     const {movies, mainMovieImage, currentPage} = Inputs;
     const endpoint = `${API_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage + 1}`;
 
-    useEffect(() => {
-        fetchMovies(endpoint);
-    }, []);
-
     const fetchMovies = (endpoint) => {
         fetch(endpoint)
         .then(response => response.json())
         .then(response => {
-            console.log(response.results);
+            //console.log(response.results);
             setInputs({
                 ...Inputs,
                 movies: [...movies, ...response.results],
@@ -39,6 +35,11 @@ function LandingPage(props) {
         fetchMovies(endpoint);
     };
 
+    useEffect(() => {
+        fetchMovies(endpoint);
+    }, []);
+
+    
     return (
         <div style={{ width: '100%', margin: '0'}}>
             {/* Main Image: 받아와야 rendering됨*/}

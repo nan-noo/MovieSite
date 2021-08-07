@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {auth} from '../_actions/user_actions';
 
-export default function(SpecificComponent, option, adminRoute = null){
+export default function authentication(SpecificComponent, option, adminRoute = null){
     // option: null(아무나), true(login유저만), false(login유저는출입불가능)
     // adminRoute: null(default), true(admin만 출입 가능)
 

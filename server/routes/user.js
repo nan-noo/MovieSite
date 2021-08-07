@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
+const userRouter = express.Router();
 
 const {User} = require('../models/User');
 const {auth} = require('../middleware/auth');
 
-router.post('/register', (req, res) => {
+userRouter.post('/register', (req, res) => {
     // register user info to DB
     const user = new User(req.body);
 
@@ -14,13 +14,14 @@ router.post('/register', (req, res) => {
     });
 });
 
-router.post('/login', (req, res) => {
+userRouter.post('/login', (req, res) => {
     // 1. check if there is the same email address in DB
     // 2. if there is, check password
     // 3. if it correct, create token
     
     // 1.
     User.findOne({email: req.body.email}, (err, userInfo) => {
+        if(err) return res.status(400).send(err);
         if(!userInfo){
             return res.json({
                 loginSuccess: false,
@@ -45,7 +46,7 @@ router.post('/login', (req, res) => {
     })
 })
 
-router.get('/auth', auth, (req, res) => {
+userRouter.get('/auth', auth, (req, res) => {
     // middleware 통과 -> authentcation success
     res.status(200).json({
         _id: req.user._id,
@@ -59,7 +60,7 @@ router.get('/auth', auth, (req, res) => {
     });
 })
 
-router.get('/logout', auth, (req, res) => {
+userRouter.get('/logout', auth, (req, res) => {
     User.findOneAndUpdate({_id: req.user._id}, {token: ""}, (err, user) => {
         if(err) return res.json({
             logoutSuccess: false,
@@ -71,4 +72,4 @@ router.get('/logout', auth, (req, res) => {
     })
 })
 
-module.exports = router;
+module.exports = userRouter;

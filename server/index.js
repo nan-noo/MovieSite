@@ -2,10 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
-const {User} = require('./models/User');
 const config = require('./config/key');
-const {auth} = require('./middleware/auth');
-const router = require('./routes/user');
+const userRouter = require('./routes/user');
+const favoriteRouter = require('./routes/favorite');
 
 const port = 5000;
 const app = express();
@@ -26,10 +25,8 @@ mongoose.connect( config.mongoURI, {
 }).then(() => console.log('MongoDB connected...'))
 .catch( err => console.log(err));
 
-app.get('/', (req, res) => res.send('Hello World! hihi'));
+app.use('/api/users', userRouter);
 
-app.get('/api/hello', (req, res) => res.send('welcome!!'));
-
-app.use('/api/users', router);
+app.use('/api/favorite', favoriteRouter);
 
 app.listen(port, () => console.log(`Listening on port ${port}...`))
