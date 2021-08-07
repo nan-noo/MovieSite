@@ -9,7 +9,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { applyMiddleware, createStore } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
-import Reducer from './_reducers/index'
+import Reducer from './_reducers/root_reducer';
 
 // 그냥 createStore만 하면 객체만 받을 수 있기 때문에 promise, function을 받게 해주는 middleware와 함께 사용
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);

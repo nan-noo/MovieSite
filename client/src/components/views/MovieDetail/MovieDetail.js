@@ -5,8 +5,10 @@ import { API_KEY } from '../../../key';
 import MainImage from '../commons/MainImage';
 import MovieInfo from './Sections/MovieInfo';
 import GridCards from '../commons/GridCards';
+import Favorite from './Sections/Favorite';
 
 import {Button, Row} from 'antd';
+
 
 function MovieDetail(props) {
     let movieId = props.match.params.movieId;
@@ -47,6 +49,10 @@ function MovieDetail(props) {
 
             {/* Body */}
             <div style={{ width: '85%', margin: '1rem auto'}}>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <Favorite movieInfo={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')}/>
+                </div>
+
                 {/* Movie Info */}
                 <MovieInfo movie={Movie}/>
                 <br/>

@@ -23,6 +23,7 @@ function LoginPage(props) {
 
         dispatch(loginUser(Inputs))
             .then(response => {
+                window.localStorage.setItem('userId', response.payload.userId);
                 if(response.payload.loginSuccess){
                     props.history.push('/'); // landingPage로 이동
                 }
