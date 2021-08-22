@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {COMMENT_SERVER} from '../../../Config';
 import SingleComment from './SingleComment';
+import ReplyComment from './ReplyComment';
 import {Button, Input} from 'antd';
 import axios from 'axios';
 
@@ -39,7 +40,7 @@ function Comments(props) {
     return (
         <div>
             <br/>
-            <p>Replies</p>
+            <p>{commentList.length} Replies</p>
             <hr/>
             {/* Root Comment Form */}
             <form style={{display: 'flex'}} onSubmit={onSubmit}>
@@ -56,7 +57,10 @@ function Comments(props) {
             {/* Comments List */}
             {commentList && commentList.map((comment, index) => (
                 (!comment.responseTo &&
-                    <SingleComment key={index} movieId={movieId} comment={comment} refreshFunction={props.refreshFunction}/>
+                    <React.Fragment key={index}>
+                        <SingleComment  movieId={movieId} comment={comment} refreshFunction={props.refreshFunction}/>
+                        <ReplyComment parentCommentId={comment._id} commentList={commentList} movieId={movieId} refreshFunction={props.refreshFunction}/>
+                    </React.Fragment>
                 )  
             ))}
         </div>

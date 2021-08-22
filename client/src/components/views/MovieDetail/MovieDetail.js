@@ -39,7 +39,7 @@ function MovieDetail(props) {
         axios.post(`${COMMENT_SERVER}/getComments`, {movieId})
         .then(response => {
             if(response.data.success){
-                console.log(response.data);
+                console.log(response.data.comments);
                 setCommentList(response.data.comments);
             }
             else{
@@ -48,7 +48,7 @@ function MovieDetail(props) {
         });
     }, []);
 
-    const refreshFunction = (newComment) => {
+    const updateComment = (newComment) => {
         setCommentList(CommentList.concat(newComment));
     };
 
@@ -88,7 +88,7 @@ function MovieDetail(props) {
                 }
 
                 {/* Comments */}
-                <Comments movieId={movieId} commentList={CommentList} refreshFunction={refreshFunction}/>
+                <Comments movieId={movieId} commentList={CommentList} refreshFunction={updateComment}/>
             </div>
         </div>
     )

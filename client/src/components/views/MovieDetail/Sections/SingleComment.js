@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {Comment, Avatar, Button} from 'antd';
+import {Comment, Avatar, Button, Input} from 'antd';
 import axios from 'axios';
 import {COMMENT_SERVER} from '../../../Config';
 
+const {TextArea} = Input;
 
 function SingleComment(props) {
     const user = useSelector(state => state.user);
@@ -21,7 +22,7 @@ function SingleComment(props) {
         const variables = {
             content: CommentValue,
             writer: user.userData._id,
-            postId: props.movieId,
+            movieId: props.movieId,
             responseTo: props.comment._id,
         };
 
@@ -30,6 +31,7 @@ function SingleComment(props) {
             if(response.data.success){
                 props.refreshFunction(response.data.result);
                 setCommentValue("");
+                setOpenReply(!OpenReply);
             }
             else{
                 alert('failed to save comment')
@@ -47,7 +49,7 @@ function SingleComment(props) {
             />
             { OpenReply &&
                 <form style={{display: 'flex'}} onSubmit={onSubmit}>
-                    <textarea
+                    <TextArea
                         style={{width: '100%', borderRadius: '5px'}}
                         onChange={(event) => setCommentValue(event.currentTarget.value)}
                         value={CommentValue}
