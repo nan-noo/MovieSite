@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const userRouter = require('./routes/user');
 const favoriteRouter = require('./routes/favorite');
+const commentRouter = require('./routes/comment');
 
 const port = 5000;
 const app = express();
@@ -28,5 +29,7 @@ mongoose.connect( config.mongoURI, {
 app.use('/api/users', userRouter);
 
 app.use('/api/favorite', favoriteRouter);
+
+app.use('/api/comment', commentRouter);
 
 app.listen(port, () => console.log(`Listening on port ${port}...`))
