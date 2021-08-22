@@ -46,7 +46,7 @@ function MovieDetail(props) {
                 alert('failed to get comments');
             }
         });
-    });
+    }, []);
 
     const refreshFunction = (newComment) => {
         setCommentList(CommentList.concat(newComment));

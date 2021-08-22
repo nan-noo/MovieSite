@@ -54,7 +54,7 @@ function SingleComment(props) {
                         placeholder= 'write a comment'
                     />
                     <br/>
-                    <Button style={{width: '20%', height: '52px'}} onClick={onSubmit}>Submit</Button>
+                    <Button style={{width: '15%', height: '52px', marginLeft: '10px'}} onClick={onSubmit}>Submit</Button>
                 </form>
             }
             

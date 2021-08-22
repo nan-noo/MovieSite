@@ -5,7 +5,7 @@ import SingleComment from './SingleComment';
 import {Button, Input} from 'antd';
 import axios from 'axios';
 
-const {TextArrea} = Input;
+const {TextArea} = Input;
 
 function Comments(props) {
     const commentList = props.commentList;
@@ -43,14 +43,14 @@ function Comments(props) {
             <hr/>
             {/* Root Comment Form */}
             <form style={{display: 'flex'}} onSubmit={onSubmit}>
-                <TextArrea
+                <TextArea
                     style={{width: '100%', borderRadius: '5px'}}
                     onChange={(event) => setCommentValue(event.currentTarget.value)}
                     value={CommentValue}
                     placeholder= 'write a comment'
                 />
                 <br/>
-                <Button style={{width: '20%', height: '52px'}} onClick={onSubmit}>Submit</Button>
+                <Button style={{width: '15%', height: '52px', marginLeft: '10px'}} onClick={onSubmit}>Submit</Button>
             </form>
 
             {/* Comments List */}

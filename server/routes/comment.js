@@ -21,6 +21,7 @@ commentRouter.post('/saveComment', (req, res) => {
 
 commentRouter.post('/getComments', (req, res) => {
     Comment.find({'movieId': req.body.movieId})
+        .populate('writer')
         .exec((err, comments) => {
             if(err) return res.status(400).send(err);
             return res.status(200).json({success: true, comments});
