@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {Comment, Avatar, Button, Input} from 'antd';
+import {Comment, Avatar, Button} from 'antd';
 import axios from 'axios';
 import {COMMENT_SERVER} from '../../../Config';
 
-const {TextArrea} = Input;
 
 function SingleComment(props) {
     const user = useSelector(state => state.user);
@@ -43,7 +42,7 @@ function SingleComment(props) {
             <Comment
                 actions={actions}
                 author={props.comment.writer.name}
-                avatar={<Avatar src={props.comment.writer.image} alt />}
+                avatar={<Avatar src={props.comment.writer.image} alt={props.comment.writer.name} />}
                 content={<p>{props.comment.content}</p>}
             />
             { OpenReply &&

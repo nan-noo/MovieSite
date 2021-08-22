@@ -45,7 +45,7 @@ function FavoritePage() {
         const content = (
             <div>
                 {favorite.moviePost ?
-                <img src={`${IMAGE_BASE_URL}/w500${favorite.moviePost}`}/> :
+                <img src={`${IMAGE_BASE_URL}/w500${favorite.moviePost}`} alt=""/> :
                 "no image"
             }
             </div>

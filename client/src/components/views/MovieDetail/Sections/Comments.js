@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import {COMMENT_SERVER} from '../../../Config';
 import SingleComment from './SingleComment';
-import {Button} from 'antd';
+import {Button, Input} from 'antd';
 import axios from 'axios';
+
+const {TextArrea} = Input;
 
 function Comments(props) {
     const commentList = props.commentList;
@@ -41,7 +43,7 @@ function Comments(props) {
             <hr/>
             {/* Root Comment Form */}
             <form style={{display: 'flex'}} onSubmit={onSubmit}>
-                <textarea
+                <TextArrea
                     style={{width: '100%', borderRadius: '5px'}}
                     onChange={(event) => setCommentValue(event.currentTarget.value)}
                     value={CommentValue}
@@ -54,7 +56,7 @@ function Comments(props) {
             {/* Comments List */}
             {commentList && commentList.map((comment, index) => (
                 (!comment.responseTo &&
-                    <SingleComment movieId={movieId} comment={comment} refreshFunction={props.refreshFunction}/>
+                    <SingleComment key={index} movieId={movieId} comment={comment} refreshFunction={props.refreshFunction}/>
                 )  
             ))}
         </div>

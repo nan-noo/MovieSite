@@ -37,7 +37,7 @@ function LandingPage(props) {
 
     useEffect(() => {
         fetchMovies(endpoint);
-    }, []);
+    });
 
     
     return (

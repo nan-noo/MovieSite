@@ -47,7 +47,7 @@ function Favorite({movieInfo, movieId, userFrom}) {
                 alert('정보를 가져오는 데에 실패했습니다.');
             }
         });    
-    }, [])
+    })
 
     const onClickFavorite = () => {
         if(Favorited){

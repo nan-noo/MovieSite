@@ -1,8 +1,6 @@
 import React from 'react';
 import {Menu} from 'antd';
 
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 const MenuItem = Menu.Item;
 
 function LeftMenu({mode}) {
