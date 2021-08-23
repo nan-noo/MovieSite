@@ -6,6 +6,7 @@ const config = require('./config/key');
 const userRouter = require('./routes/user');
 const favoriteRouter = require('./routes/favorite');
 const commentRouter = require('./routes/comment');
+const likeRouter = require('./routes/likedislike');
 
 const port = 5000;
 const app = express();
@@ -27,9 +28,8 @@ mongoose.connect( config.mongoURI, {
 .catch( err => console.log(err));
 
 app.use('/api/users', userRouter);
-
 app.use('/api/favorite', favoriteRouter);
-
 app.use('/api/comment', commentRouter);
+app.use('/api/like', likeRouter);
 
 app.listen(port, () => console.log(`Listening on port ${port}...`))

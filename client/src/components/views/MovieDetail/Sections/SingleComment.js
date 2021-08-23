@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {Comment, Avatar, Button, Input} from 'antd';
 import axios from 'axios';
 import {COMMENT_SERVER} from '../../../Config';
+import LikeDislike from './LikeDislike';
 
 const {TextArea} = Input;
 
@@ -13,6 +14,7 @@ function SingleComment(props) {
     const [CommentValue, setCommentValue] = useState("");
 
     const actions = [
+        <LikeDislike userId={user.userData._id} commentId={props.comment._id}/>,
         <span onClick={() => setOpenReply(!OpenReply)} key="comment-basic-reply-to">Reply</span>
     ];
 

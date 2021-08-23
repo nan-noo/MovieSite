@@ -1,6 +1,6 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {favoriteNumber, favorited} from '../../../../_actions/favorite_actions';
 
 import { HeartTwoTone } from '@ant-design/icons';
@@ -13,6 +13,7 @@ function Favorite({movieInfo, movieId, userFrom}) {
     const moviePost = movieInfo.backdrop_path;
     const movieRunTime = movieInfo.runtime;
 
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
     const [FavoriteNumber, setFavoriteNumber] = useState(0);
@@ -50,6 +51,7 @@ function Favorite({movieInfo, movieId, userFrom}) {
     }, []);
 
     const onClickFavorite = () => {
+        if(!user.userData.isAuth) return;
         if(Favorited){
             axios.post(`${FAVORITE_SERVER}/removeFromFavorite`, data)
             .then(response => {

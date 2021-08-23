@@ -18,6 +18,11 @@ function Comments(props) {
     const onSubmit = (event) => {
         event.preventDefault();
 
+        if(!user.userData.isAuth){
+            alert('You need to log in to write comments.');
+            return;
+        }
+
         const variables = {
             content: CommentValue,
             writer: user.userData._id,
