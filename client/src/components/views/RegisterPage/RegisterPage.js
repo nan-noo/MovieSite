@@ -2,6 +2,11 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {registerUser} from '../../../_actions/user_actions';
 
+import {Button, Form, Input, Typography} from 'antd';
+import {UserOutlined, LockOutlined, MailOutlined, UnlockOutlined} from '@ant-design/icons';
+
+const {Title} = Typography;
+
 function RegisterPage(props) {
     const dispatch = useDispatch();
     const [Inputs, setInputs] = useState({
@@ -52,23 +57,56 @@ function RegisterPage(props) {
             width: '100%',
             height: '100vh'
         }}>
-            <form style={{
-                display: 'flex',
-                flexDirection: 'column'
-            }}
-                onSubmit={onSubmitHandler}
-            >
-                <label>Email</label>
-                <input type="email" name="email" value={email} onChange={onInputsHandler} />
-                <label>Name</label>
-                <input type="text" name="name" value={name} onChange={onInputsHandler} />
-                <label>Password</label>
-                <input type="password" name="password" value={password} onChange={onInputsHandler} />
-                <label>Confirm Password</label>
-                <input type="password" name="confirmPassword" value={confirmPassword} onChange={onInputsHandler} />
-                <br/>
-                <button type="submit">Register</button>
-            </form>
+            <div>
+                <Title level={3} style={{textAlign: 'center'}}>Sign Up</Title>
+                <form style={{width: '350px'}} onSubmit={onSubmitHandler}>
+                    <Form.Item required>
+                        <Input
+                            id="email"
+                            prefix={<MailOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
+                            placeholder="Enter your Email"
+                            type="email"
+                            value={email}
+                            name="email"
+                            onChange={onInputsHandler}
+                        />
+                    </Form.Item>
+                    <Form.Item required>
+                        <Input
+                            id="name"
+                            prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
+                            placeholder="Enter your Name"
+                            type="name"
+                            value={name}
+                            name="name"
+                            onChange={onInputsHandler}
+                        />
+                    </Form.Item>
+                    <Form.Item required>
+                        <Input
+                            id="password"
+                            prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
+                            placeholder="Enter your Password"
+                            type="password"
+                            value={password}
+                            name="password"
+                            onChange={onInputsHandler}
+                        />
+                    </Form.Item>
+                    <Form.Item required>
+                        <Input
+                            id="confirmPassword"
+                            prefix={<UnlockOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
+                            placeholder="Enter your ConfirmPassword"
+                            type="password"
+                            value={confirmPassword}
+                            name="confirmPassword"
+                            onChange={onInputsHandler}
+                        />
+                    </Form.Item>
+                    <Button type="primary" htmlType="submit" style={{minWidth: '100%'}}>Register</Button>
+                </form>
+            </div>
         </div>
     )
 }

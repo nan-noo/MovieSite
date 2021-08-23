@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {loginUser} from '../../../_actions/user_actions';
 
-import {Button, Form, Input, Checkbox, Typography} from 'antd';
-import {UserOutlined, LockOutlined} from '@ant-design/icons';
+import {Button, Form, Input, Typography} from 'antd';
+import {MailOutlined, LockOutlined} from '@ant-design/icons';
 
 const {Title} = Typography;
 
@@ -54,7 +54,7 @@ function LoginPage(props) {
                     <Form.Item required>
                         <Input
                             id="email"
-                            prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
+                            prefix={<MailOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
                             placeholder="Enter your Email"
                             type="email"
                             value={email}
