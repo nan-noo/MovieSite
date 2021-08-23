@@ -1,12 +1,13 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import axios from 'axios';
 import {favoriteNumber, favorited} from '../../../../_actions/favorite_actions';
+import { FAVORITE_SERVER } from '../../../Config';
 
 import { HeartTwoTone } from '@ant-design/icons';
 import {Button} from 'antd';
-import axios from 'axios';
-import { FAVORITE_SERVER } from '../../../Config';
+
 
 function Favorite({movieInfo, movieId, userFrom}) {
     const movieTitle = movieInfo.title;
