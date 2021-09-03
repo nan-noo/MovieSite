@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {auth} from '../_actions/user_actions';
 
+// 컴포넌트를 매개변수로 받고, 다른 컴포넌트를 반환
 export default function authentication(SpecificComponent, option, adminRoute = null){
     // option: null(아무나), true(login유저만), false(login유저는출입불가능)
     // adminRoute: null(default), true(admin만 출입 가능)

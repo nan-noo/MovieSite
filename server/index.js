@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const config = require('./config/key');
+
+//router
 const userRouter = require('./routes/user');
 const favoriteRouter = require('./routes/favorite');
 const commentRouter = require('./routes/comment');
