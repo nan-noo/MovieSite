@@ -5,7 +5,7 @@ import axios from 'axios';
 import {favoriteNumber, favorited} from '../../../../_actions/favorite_actions';
 import { FAVORITE_SERVER } from '../../../Config';
 
-import { HeartTwoTone } from '@ant-design/icons';
+import { HeartTwoTone,  } from '@ant-design/icons';
 import {Button} from 'antd';
 
 
@@ -81,8 +81,10 @@ function Favorite({movieInfo, movieId, userFrom}) {
 
     return (
         <Button type="dashed" onClick={onClickFavorite}>
-            <HeartTwoTone twoToneColor="#eb2f96" />
-            {Favorited ? "Favorited": "Add To Favorite" } {FavoriteNumber} 
+            
+            {Favorited 
+            ? <><HeartTwoTone twoToneColor="#eb2f96" /> Favorited</>
+            : "Add To Favorite" } {FavoriteNumber} 
         </Button>
     )
 }

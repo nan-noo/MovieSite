@@ -1,83 +1,131 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
+
 import {loginUser} from '../../../_actions/user_actions';
 
-import {Button, Form, Input, Typography} from 'antd';
-import {MailOutlined, LockOutlined} from '@ant-design/icons';
+import {Button, Form, Input, Typography, Checkbox} from 'antd';
+import {MailOutlined, LockOutlined, EyeInvisibleOutlined, EyeTwoTone,} from '@ant-design/icons';
 
 const {Title} = Typography;
 
 function LoginPage(props) {
     const dispatch = useDispatch();
-    const [Inputs, setInputs] = useState({
-        email: "",
-        password: ""
-    });
-    const {email, password} = Inputs;
+    const [RememberMe, setRememberMe] = useState(localStorage.getItem('rememberMe') ? true : false);
 
-    const onInputsHandler = (event) => {
-        const {value, name} = event.target;
-        setInputs({
-            ...Inputs, //기존의 Input객체 복사
-            [name]: value // 바뀐 값을 해당 name(key)에 설정
-        });
+    const initialValues = {
+        email: localStorage.getItem('rememberMe') ? localStorage.getItem('rememberMe') : '',
+        password: '',
     };
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email('올바른 이메일 주소가 아닙니다.'),
+        password: Yup.string().min(5, '최소 5글자여야 합니다.'),
+    });
 
-    const onSubmitHandler = (event) => {
-        event.preventDefault(); // page refresh 방지
+    const onSubmit = (values, {setSubmitting}) => {
+        setTimeout(() => {
+            const dataToSubmit = {
+                email: values.email,
+                password: values.password,
+            }
 
-        dispatch(loginUser(Inputs))
+            dispatch(loginUser(dataToSubmit))
             .then(response => {
-                window.localStorage.setItem('userId', response.payload.userId);
                 if(response.payload.loginSuccess){
-                    props.history.push('/'); // landingPage로 이동
+                    window.localStorage.setItem('userId', response.payload.userId);
+                    if(RememberMe) window.localStorage.setItem('rememberMe', values.email);
+                    else localStorage.removeItem('rememberMe');
+
+                    props.history.push('/');
                 }
                 else{
                     alert('Failed to sign in');
                 }
-            }); // Dispatch(action)
-    };
+            });
+
+            setSubmitting(false);
+        }, 500);
+    }
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: '100vh'
-        }}
-            className="app"
-        >   
-            <div>
-                <Title level={3} style={{textAlign: 'center'}}>Log In</Title>
-                <form style={{width: '350px'}} onSubmit={onSubmitHandler}>
-                    <Form.Item required>
-                        <Input
-                            id="email"
-                            prefix={<MailOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
-                            placeholder="Enter your Email"
-                            type="email"
-                            value={email}
-                            name="email"
-                            onChange={onInputsHandler}
-                        />
-                    </Form.Item>
-                    <Form.Item required>
-                        <Input
-                            id="password"
-                            prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
-                            placeholder="Enter your Password"
-                            type="password"
-                            value={password}
-                            name="password"
-                            onChange={onInputsHandler}
-                        />
-                    </Form.Item>
-                    <Button type="primary" htmlType="submit" style={{minWidth: '100%'}}>Login</Button>
-                </form>
-            </div>
-        </div>
-    )
-}
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+        >
+            {props => {
+                const {
+                    values, touched, errors, dirty, isSubmitting,
+                    handleChange, handleBlur, handleSubmit, handleReset
+                } = props;
+
+                return (
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100vh'
+                    }}>   
+                        <Form style={{width: '350px'}} onSubmit={handleSubmit}>
+                            <Title level={3} style={{textAlign: 'center'}}>Log In</Title>
+                            <Form.Item>
+                                <Input
+                                    id="email"
+                                    placeholder="Enter your email"
+                                    prefix={<MailOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
+                                    type="email"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={
+                                        errors.email && touched.email
+                                            ? "text-input error"
+                                            : "text-input"
+                                    }
+                                />
+                                {errors.email && touched.email && (
+                                    <div className="input-feedback">{errors.email}</div>
+                                )}
+                            </Form.Item>
+                            <Form.Item>
+                                <Input.Password
+                                    id="password"
+                                    prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25'}}/>}
+                                    placeholder="Enter your Password"
+                                    value={values.password}
+                                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={
+                                        errors.password && touched.password
+                                            ? "text-input error"
+                                            : "text-input"
+                                    }
+                                />
+                                {errors.password && touched.password && (
+                                    <div className="input-feedback">{errors.password}</div>
+                                )}
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Checkbox id="rememberMe" onChange={() => setRememberMe(!RememberMe)} checked={RememberMe} 
+                                style={{margin: '2px', color: 'rgba(0,0,0,.50)'}} 
+                                >remember Me</Checkbox>
+                                <Button type="primary" onClick={handleSubmit} disabled={isSubmitting} style={{minWidth: '100%'}}>Login</Button>
+                                <div style={{color: 'rgba(0,0,0,.50)', fontStyle: 'italic', marginTop: '5px'}}>
+                                    New here? 
+                                    <Button type="link" href="/register" style={{
+                                        margin: '0', fontStyle: 'normal', padding: '8px'
+                                    }}>Register Now</Button>
+                                </div>
+                            </Form.Item>  
+                        </Form>
+                    </div>
+                );
+            }}
+        </Formik>
+    );
+} 
 
 export default LoginPage;

@@ -10,7 +10,7 @@
 }
 
 .menu__logo{
-    width: 150px;
+    margin-right: 10px;
     float: left;
 }
 
@@ -20,8 +20,16 @@
     padding: 19px 20px
 }
 
+.menu__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+}
+
 .menu__container .ant-menu-item{
     padding: 0px 5px;
+    
 }
 
 .menu__container .ant-menu-submenu-title{
@@ -37,12 +45,8 @@
     border-bottom: none;
 }
 
-.menu__container .menu_left{
-    float: left;
-}
-
 .menu__container .menu_right{
-    float: right;
+    margin-left: auto;
 }
 
 .menu__mobile-button{
@@ -64,12 +68,16 @@
 }
 
 @media only screen and (max-width: 767px){
+    .menu__container{
+        justify-content: flex-end;
+    }
+
     .menu__mobile-button{
         display: inline-block !important;
     }
 
     .menu_left, .menu_right{
-        display: none;
+        visibility: hidden;
     }
 
     .menu__logo a{
